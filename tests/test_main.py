@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import pytest
-from univariate_linear_regression.skeleton import fib
+from univariate_linear_regression.main import fib
 
 __author__ = "Jesse Moore"
 __copyright__ = "Jesse Moore"
