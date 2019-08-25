@@ -17,3 +17,5 @@
 #
 pytest
 pytest-cov
+pandas
+matplotlib
