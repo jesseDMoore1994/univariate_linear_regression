@@ -15,6 +15,9 @@ def random_array_of_size(size, minimum=1, maximum=25):
 
 def create_plot(data):
     df = pd.DataFrame(data, columns= ['x', 'y'])
+    df.plot.scatter(x='x', y='y')
+    plt.savefig('/app/plot.png')
+
 
 def setup_logging():
     """Setup basic logging
