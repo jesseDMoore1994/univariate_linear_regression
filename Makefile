@@ -1,7 +1,7 @@
 
 
 .PHONY: all
-all: test build
+all: test build deploy
 
 .PHONY: test
 test: .test_docker
@@ -12,7 +12,8 @@ build: test .prod_docker
 
 .PHONY: deploy
 deploy: 
-	@docker run -it --rm -v $(shell pwd):/app univariate_linear_regression
+	@docker run -it --rm -v $(shell pwd):/app --user $(shell id -u):$(shell id -g) univariate_linear_regression
+	@xdg-open plot.png
 
 .PHONY: dist
 dist: 

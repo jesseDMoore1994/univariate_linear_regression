@@ -49,3 +49,5 @@ MANIFEST
 .venv*/
 
 .test_docker
+.prod_docker
+plot.png
