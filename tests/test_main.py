@@ -36,8 +36,7 @@ def test_make_correlated_sequence():
 @patch('univariate_linear_regression.main.create_plot')
 def test_main(mock_plot):
      main()
-     assert mock_plot.call_args_list[0][0][0]['x']
-     assert mock_plot.call_args_list[0][0][0]['y']
+     assert mock_plot.called
 
 
 #def test_cost_function():
@@ -81,7 +80,7 @@ def test_create_line():
 @patch('univariate_linear_regression.main.plt.savefig')
 def test_create_plot(mock_savefig, mock_plot):
     data = {'x': [1, 2, 3], 'y': [4, 5, 6]}
-    create_plot(data)
+    create_plot()
     # assert mock_plot.call_args_list == [
     #     call([1, 2, 3], [4, 5, 6], '.'),
     #     call((1, 2, 3), (4.0, 5.0, 6.0), 'g-'),

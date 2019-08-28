@@ -39,25 +39,29 @@ def update_weight_and_bias(x, y, bias, weight, learning_rate):
 
     return w, b
 
+
 def univariate_linear_regression(X, Y):
     # guess initial weight and bias
     weight = Y[0]
     bias = Y[1] - Y[0] / X[1] - X[0]
-    learning_rate = .01
+    learning_rate = .25
     iters = 50
+
+    costs = []
 
     for i in range(iters):
         weight,bias = update_weight_and_bias(X, Y, weight, bias, learning_rate)
 
         #Calculate cost for auditing purposes
         cost = cost_function(X, Y, weight, bias)
+        costs.append(cost)
 
         # Log Progress
         if i % 10 == 0:
             print("iter={:d}    weight={:.2f}    bias={:.4f}    cost={:.2}".format(i, weight, bias, cost))
 
 
-    return weight, bias
+    return weight, bias, costs
 
 
 
@@ -96,31 +100,41 @@ def create_line(x, v0, v1):
     return [(x, v0+v1*x) for x in x]
 
 
-def create_plot(scatter_data):
+def create_plot():
+    x = [ 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0 ]
+    y = [ 5.1, 6.1, 6.9, 7.8, 9.2, 9.9, 11.5, 12.0, 12.8 ]
+    scatter_data = { 'x': x, 'y': y}
+
     # create best fit algorithmically
+    print(f"unconstrained optimization solution")
     b, w = create_best_fit_bias_and_weight(scatter_data)
+    print(f"b: {b} w: {w}")
     x, y = zip(*create_line(scatter_data['x'], b, w))
     best_fit_line_data = {'x': x, 'y': y}
+    print(f"unconstrained optimization data = {best_fit_line_data}")
+
     # create best fit using ML
-    b, w = create_best_guess_bias_and_weight(scatter_data)
+    print(f"simple linear regression solution")
+    b, w, costs = create_best_guess_bias_and_weight(scatter_data)
+    print(f"b: {b} w: {w}")
     x, y = zip(*create_line(scatter_data['x'], b, w))
     regression_line_data = {'x': x, 'y': y}
+    print(f"simple linear regression line data = {regression_line_data}")
+
+    #plot cost as a measure of iterations
+    x, y = zip(*list(enumerate(costs, 1)))
+    cost_per_iter_line_data = {'x': x, 'y': y}
+    print(f"cost per iteration line data = {cost_per_iter_line_data}")
+
     # actually graph the stuff
+    plt.figure()
     plt.plot(scatter_data['x'], scatter_data['y'], '.')
     plt.plot(best_fit_line_data['x'], best_fit_line_data['y'], 'g-')
     plt.plot(regression_line_data['x'], regression_line_data['y'], 'b-')
-    plt.savefig('/app/plot.png')
-
-
-def setup_logging():
-    """Setup basic logging
-
-    Args:
-      loglevel (int): minimum loglevel for emitting messages
-    """
-    logformat = "[%(asctime)s] %(levelname)s:%(name)s:%(message)s"
-    logging.basicConfig(stream=sys.stdout,
-                        format=logformat, datefmt="%Y-%m-%d %H:%M:%S")
+    plt.savefig('/app/regression_plot.png')
+    plt.figure()
+    plt.plot(cost_per_iter_line_data['x'], cost_per_iter_line_data['y'], 'b-')
+    plt.savefig('/app/cost_per_iteration.png')
 
 
 def main():
@@ -129,11 +143,7 @@ def main():
     Args:
       args ([str]): command line parameter list
     """
-    setup_logging()
-    x = [ i for i in range(1, 101) ]
-    y = make_correlated_sequence(x, random_array_of_size(100))
-    data = { 'x': x, 'y': y}
-    create_plot(data)
+    create_plot()
 
 
 if __name__ == "__main__":
