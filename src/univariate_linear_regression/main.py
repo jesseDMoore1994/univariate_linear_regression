@@ -46,19 +46,26 @@ def univariate_linear_regression(X, Y):
     bias = Y[1] - Y[0] / X[1] - X[0]
     learning_rate = .25
     iters = 50
+    convergence = 0.01
 
     costs = []
+    i = 0
+    cost = cost_function(X, Y, bias, weight)
+    costs.append(cost)
+    i = i + 1
 
-    for i in range(iters):
+    while True:
         weight,bias = update_weight_and_bias(X, Y, weight, bias, learning_rate)
 
         #Calculate cost for auditing purposes
-        cost = cost_function(X, Y, weight, bias)
+        cost = cost_function(X, Y, bias, weight)
         costs.append(cost)
 
-        # Log Progress
-        if i % 10 == 0:
-            print("iter={:d}    weight={:.2f}    bias={:.4f}    cost={:.2}".format(i, weight, bias, cost))
+        print("iter={}    weight={}    bias={}    cost={}".format(i, weight, bias, cost))
+        if abs(costs[i] - costs[i-1]) < convergence:
+            break
+
+        i = i + 1
 
 
     return weight, bias, costs
@@ -108,7 +115,6 @@ def create_plot():
     # create best fit algorithmically
     print(f"unconstrained optimization solution")
     b, w = create_best_fit_bias_and_weight(scatter_data)
-    print(f"b: {b} w: {w}")
     x, y = zip(*create_line(scatter_data['x'], b, w))
     best_fit_line_data = {'x': x, 'y': y}
     print(f"unconstrained optimization data = {best_fit_line_data}")
@@ -116,7 +122,6 @@ def create_plot():
     # create best fit using ML
     print(f"simple linear regression solution")
     b, w, costs = create_best_guess_bias_and_weight(scatter_data)
-    print(f"b: {b} w: {w}")
     x, y = zip(*create_line(scatter_data['x'], b, w))
     regression_line_data = {'x': x, 'y': y}
     print(f"simple linear regression line data = {regression_line_data}")
