@@ -6,4 +6,5 @@ ARG VERSION
 COPY dist/univariate_linear_regression-${VERSION}.tar.gz /
 ARG VERSION
 RUN pip install /univariate_linear_regression-${VERSION}.tar.gz
+WORKDIR /app
 CMD ulr

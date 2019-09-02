@@ -13,8 +13,6 @@ build: test .prod_docker
 .PHONY: deploy
 deploy: 
 	@docker run -it --rm -v $(shell pwd):/app --user $(shell id -u):$(shell id -g) univariate_linear_regression
-	@xdg-open regression_plot.png
-	@xdg-open cost_per_iteration.png
 
 .PHONY: dist
 dist: 

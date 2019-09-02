@@ -50,5 +50,6 @@ MANIFEST
 
 .test_docker
 .prod_docker
-regression_plot.png
-cost_per_iteration.png
+simple_linear_regression.png
+simple_linear_regression_cost_per_iteration.png
+multiple_linear_regression_cost_per_iteration.png
