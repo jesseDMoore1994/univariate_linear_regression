@@ -25,12 +25,4 @@ def test_create_line():
 @patch('univariate_linear_regression.main.plt.plot')
 @patch('univariate_linear_regression.main.plt.savefig')
 def test_create_plot(mock_savefig, mock_plot):
-    data = {'x': [1, 2, 3], 'y': [4, 5, 6]}
     create_plot()
-    # assert mock_plot.call_args_list == [
-    #     call([1, 2, 3], [4, 5, 6], '.'),
-    #     call((1, 2, 3), (4.0, 5.0, 6.0), 'g-'),
-    #     #call((1, 2, 3), (4.0, 5.0, 6.0), 'b-')
-    #     #call((1, 2, 3), (21.25, 28.0, 34.75), 'b-')
-    # ]
-    assert mock_savefig.called_with('/app/plot.png')
