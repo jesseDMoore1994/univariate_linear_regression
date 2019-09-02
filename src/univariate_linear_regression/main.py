@@ -58,8 +58,8 @@ def update_vs_for_simple_linear_regression(x, y, v0, v1, learning_rate):
     d_dv1 = sum([simple_cost_derived_with_respect_to_v1(a, b, v0, v1) for a, b in zip(x, y)])
 
     # We subtract because the derivatives point in direction of steepest ascent
-    v0 = v0 - (learning_rate * (d_dv0 / len(x)) * learning_rate)
-    v1 = v1 - (learning_rate * (d_dv1 / len(x)) * learning_rate)
+    v0 = v0 - (learning_rate * (d_dv0 / len(x)))
+    v1 = v1 - (learning_rate * (d_dv1 / len(x)))
 
     return v1, v0
 
@@ -70,14 +70,14 @@ def update_vs_for_multiple_linear_regression(x1, x2, y, v0, v1, v2, learning_rat
     d_dv2 = sum([multi_cost_derived_with_respect_to_v2(a, b, c, v0, v1, v2) for a, b, c in zip(x1, x2, y)])
 
     # We subtract because the derivatives point in direction of steepest ascent
-    v0 = v0 - (learning_rate * (d_dv0 / len(x1)) * learning_rate)
-    v1 = v1 - (learning_rate * (d_dv1 / len(x1)) * learning_rate)
-    v2 = v2 - (learning_rate * (d_dv2 / len(x1)) * learning_rate)
+    v0 = v0 - (learning_rate * (d_dv0 / len(x1)))
+    v1 = v1 - (learning_rate * (d_dv1 / len(x1)))
+    v2 = v2 - (learning_rate * (d_dv2 / len(x1)))
 
     return v2, v1, v0
 
 
-def simple_linear_regression(X, Y, alpha_init=.25, convergence=.01):
+def simple_linear_regression(X, Y, alpha_init=.1, convergence=.01):
     logging.info(f"-----------------------Starting Simple Linear Regression----------------------------------")
     v1 = Y[0]
     v0 = Y[1] - Y[0] / X[1] - X[0]
@@ -371,11 +371,6 @@ def create_plot():
 
 
 def main():
-    """Main entry point allowing external calls
-
-    Args:
-      args ([str]): command line parameter list
-    """
     create_plot()
 
 
